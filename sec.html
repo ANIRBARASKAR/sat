@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .cornerstone-element-wrapper,
+.cornerstone-element {
+  width: 512px;
+  height: 512px;
+  margin: 0 auto;
+}
+    </style>
+</head>
+<body>
+    <div class="cornerstone-element-wrapper">
+  <div class="cornerstone-element" data-index="0" oncontextmenu="return false"></div>
+</div>
+
+<script src="
+https://cdn.jsdelivr.net/npm/cornerstone-web-image-loader@2.1.1/dist/cornerstoneWebImageLoader.min.js
+"></script>
+<script src="
+https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js
+"></script>
+<script src="
+https://unpkg.com/cornerstone-core@2.2.6/dist/cornerstone.js"></script>
+
+
+<script src="
+https://unpkg.com/cornerstone-math@0.1.6/dist/cornerstoneMath.js"></script>
+<script src="
+https://unpkg.com/cornerstone-web-image-loader@2.1.0/dist/cornerstoneWebImageLoader.js"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/cornerstone-tools@3.0.0-b.717/dist/cornerstoneTools.js"></script>
+
+<script>
+    // Setup image loader
+cornerstoneWebImageLoader.external.cornerstone = cornerstone;
+cornerstone.registerImageLoader('http', cornerstoneWebImageLoader.loadImage)
+cornerstone.registerImageLoader('https', cornerstoneWebImageLoader.loadImage)
+
+// Setup tools
+const csTools = cornerstoneTools.init();
+
+// Enable Element
+const element = document.querySelector('.cornerstone-element');
+cornerstone.enable(element);
+
+// Add Tool
+const MagnifyTool = cornerstoneTools['MagnifyTool'];
+csTools.addTool(MagnifyTool);
+
+// Set Tool Active
+console.log(csTools.store)
+csTools.setToolActive('Magnify', { mouseButtonMask: 1 });
+
+// Display an image
+// const imageId = 'https://www.asteris.biz/Keystone/ImageDownload.aspx?ClinicCode=TESTKEYSTONE&ImageId=01b1755e-33d1-4b24-b9af-a4a019689d5f&ImageType=PreviewImage&FrameIndex=0';
+const imageId = 'https://images.unsplash.com/photo-1690039059538-7c08716f6623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMDJ8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60';
+cornerstone.loadImage(imageId).then(function (image) {
+  cornerstone.displayImage(element, image);
+});
+</script>
+</body>
+</html>
